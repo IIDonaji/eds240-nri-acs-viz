@@ -1,0 +1,8 @@
+---
+title: "HW #2: Visualizing FEMA NRI Data"
+author: "Ixel"
+format: html
+editor: visual
+---
+
+##
