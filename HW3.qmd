@@ -1,0 +1,111 @@
+---
+title: "HW #3: ACS Data"
+author: "Ixel M."
+description: "Assigned Wed 02/04/2026 | Due Wed 02/11/2026"
+format: 
+  pdf: 
+    echo: true
+    embed-resources: true
+execute: 
+  warning: false
+  message: false 
+editor_options: 
+  chunk_output_type: inline
+---
+# Visualization message goal
+  **How does climate hazard risk exposure vary across racial/ethnic groups in California?**
+  
+# Packages and Data uploads
+```{r}
+# Upload necessary librarys
+library(tidyverse)
+library(janitor)
+library(here)
+library(tidycensus)
+
+#....Step 1a: see all available ACS variables + descriptions.....
+#acs_vars <- load_variables(year = 2023,
+#                           dataset = "acs1")
+
+#..............Step 1b: import race & ethnicity data.............
+#race_ethnicity <- get_acs(
+#  geography = "county",
+#  survey = "acs1",
+  # NOTE: you may not end up using all these variables
+#  variables = c("B01003_001", "B02001_002", "B02001_003", 
+#                "B02001_004", "B02001_005", "B02001_006",
+#               "B02001_007", "B02001_008", "B03002_012",
+#                "B03002_002"),
+#  state = "CA", 
+#  year = 2023) |>
+  # join variable descriptions (so we know what's what!)
+#  dplyr::left_join(acs_vars, by = dplyr::join_by(variable == name)) 
+
+#.................Step 2: write ACS data to file.................
+# readr::write_csv(race_ethnicity, here::here("data", "ACS-1yr-2023-county-race-ethnicity.csv"))
+
+#..................Step 3: read in your CSV file.................
+race_ethnicity <- readr::read_csv(here::here("data", "ACS-1yr-2023-county-race-ethnicity.csv"))
+
+nr_index <- read_csv(here("data/National_Risk_Index_Counties_807384124455672111.csv"))
+```
+
+## First data exploration and wrangling 
+```{r}
+# Data Exploration
+head(race_ethnicity)
+glimpse(race_ethnicity)
+colnames(race_ethnicity)
+
+# Check racial/ethic groups
+race_ethnicity %>% 
+  distinct(variable, label) %>% 
+  print(n = Inf)
+
+# Clean & filter for racial/ethic variables
+race_ethnicity_clean <- race_ethnicity %>% 
+  filter(variable != "B01003_001", # Remove total population
+         variable != "B03002_002") %>% # Remove "Not Hispanic or Latino"
+# Clean labels to be shorter
+  mutate(race_ethnicity = case_when(
+    variable == "B02001_002" ~ "White",
+    variable == "B02001_003" ~ "Black or African American",
+    variable == "B02001_004" ~ "American Indian and Alaska Native",
+    variable == "B02001_005" ~ "Asian",
+    variable == "B02001_006" ~ "Native Hawaiian and Other Pacific Islander",
+    variable == "B02001_007" ~ "Some Other Race",
+    variable == "B02001_008" ~ "Two or More Races",
+    variable == "B03002_012" ~ "Hispanic or Latino"
+  )) %>%
+# Select relevant columns
+  select(GEOID, county = NAME, race_ethnicity, population = estimate)
+
+
+# Create a matching GEOID for NRI data to join by
+nr_index_ca <- nr_index %>% 
+  clean_names() %>% 
+  filter(state_name_abbreviation == "CA",
+         county_type == "County") %>% 
+  select(GEOID = state_county_fips_code,
+         county = county_name,
+         nri_score = national_risk_index_score_composite) %>% 
+  mutate(GEOID = as.character(GEOID))
+
+
+# Join census demographics with risk scores
+climate_risk_race <- race_ethnicity_clean %>% 
+  left_join(nr_index_ca, by = "GEOID")
+
+
+
+```
+# V. Answer some questions
+1. What are your variables of interest and what kinds of data (e.g. numeric, categorical, ordered, etc.) are they (a bullet point list is fine)?
+
+2. How did you decide which type of graphic form was best suited for answering the question? What alternative graphic forms could you have used instead? Why did you settle on this particular graphic form?
+
+3. Summarize your main finding in no more than two sentences.
+
+4. What modifications did you make to this visualization to make it more easily readable?
+
+5. Is there anything you wanted to implement, but didn’t know how? If so, please describe.

@@ -2,7 +2,7 @@
 
 EDS 240— Data Visualization Assignment
 
-# Federal Emergency Management Agency (FEMA)
+# Federal Emergency Management Agency's (FEMA) National Risk Index (NRI) & American Community Survey (ACS)
 
 # Overview
 
@@ -41,6 +41,10 @@ For each hazard type and for a composite index, communities are assigned:
 These metrics allow for comparison of natural hazard risk, vulnerability, and resilience across regions.
 
 More details about the dataset can be found in [FEMA’s National Risk Index Data Technical Documentation](https://www.fema.gov/sites/default/files/documents/fema_national-risk-index_technical-documentation.pdf).
+
+**US Census Bureau's American Community Survey (ACS)**
+
+The ACS nationwide, continuous survey collecting detailed information from small subset of population at 1 and 5 year intervals, provides communities timely social, economic, housing and demographic data every year. 
 
 # Repositroy Structure
 
