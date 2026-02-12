@@ -1,4 +1,4 @@
-# Visualizing FEMA NRI Data
+# Visualizing Natural Hazard Risk Patterns
 
 EDS 240— Data Visualization Assignment
 
@@ -6,7 +6,9 @@ EDS 240— Data Visualization Assignment
 
 # Overview
 
-This repository contains coursework for a data visualization assignment focused on natural hazards risk in the United States, using data from **FEMA’s National Risk Index (NRI).** The goal of this project is to explore, prepare, and visualize hazard-related data in ways that are effective, responsible, and accessible to a broad audience.
+This repository contains visualizations analyzing **FEMA's National Risk Index (NRI)** data to explore natural hazards risk patterns in the United States, with the focus on California.
+
+The goal of this project is to investigate, prepare, and visualize hazard-related data in ways that are effective, responsible, and accessible to a broad audience.
 
 The analysis emphasizes thoughtful visualization choices that align the **data structure, intended message, and target audience**, using the R programming language and the **{ggplot2}** ecosystem.
 
@@ -47,6 +49,16 @@ More details about the dataset can be found in [FEMA’s National Risk Index Dat
 The ACS nationwide, continuous survey collecting detailed information from small subset of population at 1 and 5 year intervals, provides communities timely social, economic, housing and demographic data every year. 
 
 # Repositroy Structure
+
+── eds240-nri-acs-viz.Rproj
+├── HW2.html
+├── HW2.pdf
+├── HW2.qmd
+├── HW3.pdf
+├── HW3.qmd
+├── LICENSE
+└── README.md
+
 
 # Methods
 
@@ -92,4 +104,4 @@ Visualizations in this repository are designed for a general, non-technical audi
 
 FEMA for providing the National Risk Index data
 
-Course instructors and materials from EDS 240
+Course instructors and materials from [EDS 240](https://eds-240-data-viz.github.io/)
